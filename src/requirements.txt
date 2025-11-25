@@ -1,0 +1,14 @@
+# python==3.11.x
+PyGithub
+pandas
+psycopg2-binary
+matplotlib
+seaborn
+plotly
+streamlit
+langchain
+langgraph
+openai
+prophet
+statsmodels
+numpy
