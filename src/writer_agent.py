@@ -7,7 +7,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
 def get_code_from_prompt(user_query):
     llm = ChatOpenAI(
-        model="gpt-3.5-turbo",
+        model="gpt-4o-mini",
         temperature=0.1,
         openai_api_key=OPENAI_API_KEY,
     )
@@ -41,8 +41,10 @@ def get_code_from_prompt(user_query):
         "  author_login TEXT\n"
         "  committed_at TIMESTAMP\n"
         "  message TEXT\n\n"
-        "For every user analytics question, generate ONLY the complete executable Python code (no comments, markdown, or explanation)\n"
-        "For any question about visualizations: plot a **line chart**, **pie chart**, **bar chart**, or **stack-bar chart** using matplotlib or pandas built-in plotting as appropriate, according to the user's request.\n"
+        "For every user analytics question, generate ONLY the complete executable Python code with all necessary imports. "
+        "For time series forecasting, always use 'from prophet import Prophet'; do not use 'fbprophet'."
+        "The code must run as-is, without missing variables, functions, or steps. "
+        "Visualizations: generate code for line chart, pie chart, bar chart, or stack-bar chart using matplotlib or pandas plotting as requested. Do NOT call plt.show(); simply produce the Figure, as the host application will display it using st.pyplot().\n"
         "using pandas and psycopg2. Your code must use this connection:\n"
         "conn = psycopg2.connect(\n"
         "    dbname='spm_db',\n"
@@ -51,7 +53,8 @@ def get_code_from_prompt(user_query):
         "    host='localhost',\n"
         "    port=5432\n"
         ")\n"
-        "Do NOT use input() or file I/O. Output only executable Python code as requested.\n"
+        "Do NOT use input() or file I/O. Output only clean executable Python code (no comments, markdown, or explanation).\n"
+        "The Python code must be 100 percenet complete and runnable, with all imports, all parentheses closed, all code blocks finished, and no incomplete lines. Do not end the code mid-line. Never return truncated code. Output all lines required, especially at the end of the block.\n"
         "User prompt: {user_query}"
     )
     prompt = PromptTemplate.from_template(system_prompt)

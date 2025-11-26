@@ -1,6 +1,7 @@
 import streamlit as st
 from writer_agent import get_code_from_prompt
 from executor_agent import execute_generated_code
+import matplotlib.pyplot as plt
 
 st.title("GitHub Analytics (Modular Agent Pipeline)")
 
@@ -27,6 +28,11 @@ if st.button("Run Agent") and user_query.strip():
         result = execute_generated_code(code)
         st.subheader("Execution Result:")
         st.write(result)
+        # Display any active matplotlib figure (if code produced a plot)
+        fig = plt.gcf()
+        if fig and len(fig.get_axes()) > 0:
+            st.pyplot(fig)
+            plt.clf()
     except Exception as e:
         st.error(f"Execution error: {e}")
 
