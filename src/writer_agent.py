@@ -65,8 +65,15 @@ def get_code_from_prompt(user_query):
         - Use Prophet for issues (import as: from prophet import Prophet).
         - Use statsmodels (ARIMA/SARIMA) for commits or pull requests.
         - Forecast 30 days ahead.
+        - For closed issues use closed_at; for created issues use created_at.
         - For per-repo forecasting: fit once per repo, predict, then plot with model.plot(forecast) inside the loop.
-        - When creating forecast DataFrames, rename columns to unique names (for example, forecasted_commits) to avoid conflicts.
+        - When creating per-repo forecast outputs, do:
+          • Create a pandas Series per repo: forecast.set_index('ds')['yhat'].rename('forecasted_closed_issues_<sanitized_repo>' or 'forecasted_created_issues_<sanitized_repo>').
+          • Append these Series to a list (not DataFrames).
+          • Finally, use pd.concat(series_list, axis=1) to align by the 'ds' index (this prevents duplicate 'ds' columns).
+          • Do NOT include 'ds' as a column in the concatenated object; it should be the index only.
+          • Sort the index and consider fillna(0) if appropriate for display.
+        - Sanitize repo names for column naming: replace all non-alphanumeric characters with underscores (e.g., using Python's re.sub). Import re if needed.
         6) No placeholders, no pseudo-code. Do NOT use input() or any file I/O.
         7) Import all required libraries (pandas, psycopg2, streamlit, plotting libs, etc.).
 
