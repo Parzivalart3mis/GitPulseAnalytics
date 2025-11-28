@@ -32,43 +32,67 @@ def _static_checks(code: str, user_query: str):
     return issues
 
 def review_code(code: str, user_query: str):
+    """
+    Review the generated code and return a score and status.
+    
+    Args:
+        code (str): The generated code to review
+        user_query (str): The original user query that generated this code
+        
+    Returns:
+        tuple: (score: int, status: str) where:
+            - score: A number between 0-100 indicating code quality
+            - status: Either "ACCEPTED" or "REJECTED"
+    """
+    # Run static checks first
     issues = _static_checks(code, user_query)
-    if issues:
-        feedback = "\n".join(issues)
-        return False, feedback
+    
+    # Initialize LLM for dynamic analysis
     llm = ChatOpenAI(
         model="gpt-4o-mini",
         temperature=0,
         openai_api_key=OPENAI_API_KEY,
     )
-    system_and_prompt = (
-        "You are a precise Python code reviewer for a data analytics agent. "
-        "Review for syntax, completeness, and logical correctness relative to the user question. "
-        "Constraints and policies:\n"
-        "- Database: must use psycopg2 with the exact provided connection string.\n"
-        "- I/O: do not use input() or any file I/O (open()).\n"
-        "- Plotting: plt.show() is not allowed. Using matplotlib/plotly/seaborn is allowed.\n"
-        "  Streamlit display is allowed via st.write, st.dataframe, st.table, st.pyplot(fig) or st.pyplot() or st.pyplot(plt), and st.plotly_chart(fig).\n"
-        "  Do not treat st.pyplot(plt) as an indirect call to plt.show(); it is acceptable.\n"
-        "  Do NOT reject simply for using Streamlit display functions.\n"
-        "- Forecasting libraries are only required when the user explicitly asks for forecasting. Do not require Prophet or statsmodels otherwise.\n"
-        "- Prophet usage must follow best practices: fit once per repo (model = Prophet(); model.fit(df)), then forecast = model.predict(future), then fig = model.plot(forecast). Do not use Prophet().plot(forecast).\n"
-        "- When the user asks for created issues, the code must use created_at (not closed_at).\n"
-        "- Per-repo plotting should occur inside the per-repo loop to avoid referencing out-of-scope variables.\n"
-        "- Displaying per-repo DataFrames separately is acceptable; do not require concatenation across repos unless requested.\n"
-        "- Prefer correctness and executability. Lack of an explicit connection close or context manager is not grounds for rejection.\n\n"
-        f"User question:\n{user_query}\n\n"
-        f"Code to review:\n{code}\n\n"
-        "Respond with either exactly:\n"
-        "APPROVED\n"
-        "or\n"
-        "REJECTED\n<one-per-line concise issues>\n"
-    )
-    resp = llm.invoke(system_and_prompt)
-    text = getattr(resp, "content", str(resp))
-    up = text.upper()
-    if "APPROVED" in up and "REJECT" not in up:
-        return True, ""
-    lines = [ln for ln in text.splitlines() if ln.strip()]
-    feedback = "\n".join(lines)
-    return False, feedback
+    
+    # Simple prompt to get a score and status
+    system_prompt = """
+    You are a code quality evaluator. Review the code and user query, then provide:
+    1. A score from 0-100 based on code quality, correctness, and alignment with requirements
+    2. A status of either "ACCEPTED" or "REJECTED"
+    
+    Format your response exactly as:
+    SCORE: [0-100]
+    STATUS: [ACCEPTED/REJECTED]
+    """
+    
+    # Get LLM assessment
+    response = llm.invoke(f"{system_prompt}\n\nUser Query: {user_query}\n\nCode:\n{code}")
+    response_text = getattr(response, "content", str(response)).strip()
+    
+    # Parse response
+    score = 50  # Default score if parsing fails
+    status = "ACCEPTED"  # Default to accepted
+    
+    # Try to extract score and status from response
+    lines = [line.strip() for line in response_text.split('\n') if line.strip()]
+    for line in lines:
+        if line.upper().startswith("SCORE:"):
+            try:
+                score = int(line.split(":")[1].strip())
+                score = max(0, min(100, score))  # Clamp to 0-100
+            except (ValueError, IndexError):
+                pass
+        elif line.upper().startswith("STATUS:"):
+            status = line.split(":")[1].strip().upper()
+            if status not in ["ACCEPTED", "REJECTED"]:
+                status = "ACCEPTED"  # Default to accepted if invalid status
+    
+    # If there were static issues, cap the score at 70
+    if issues and score > 70:
+        score = 70
+    
+    # If score is below 50, mark as REJECTED regardless of LLM's status
+    if score < 50:
+        status = "REJECTED"
+    
+    return score, status

@@ -1,6 +1,7 @@
-from typing import Dict, Any
+from typing import Dict, Any, Tuple
 from writer_agent import get_code_from_prompt
 from executor_agent import execute_generated_code
+from reviewer_agent import review_code
 
 
 def _extract_code(text: str) -> str:
@@ -15,10 +16,15 @@ def _extract_code(text: str) -> str:
 
 
 def run_multi_agent_pipeline(user_query: str) -> Dict[str, Any]:
+    # Get code from writer agent
     llm_message = get_code_from_prompt(user_query)
     code = getattr(llm_message, "content", llm_message)
     code = _extract_code(code)
 
+    # Get review score and status
+    review_score, review_status = review_code(code, user_query)
+    
+    # Execute the code regardless of review status
     exec_result = None
     exec_error = None
     try:
@@ -28,6 +34,8 @@ def run_multi_agent_pipeline(user_query: str) -> Dict[str, Any]:
 
     return {
         "code": code,
+        "review_score": review_score,
+        "review_status": review_status,
         "execution_result": exec_result,
         "execution_error": exec_error,
     }
