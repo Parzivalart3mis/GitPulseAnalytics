@@ -4,7 +4,7 @@ from langchain_openai import ChatOpenAI
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
-def _static_checks(code: str):
+def _static_checks(code: str, user_query: str):
     issues = []
     try:
         compile(code, "<review>", "exec")
@@ -24,10 +24,15 @@ def _static_checks(code: str):
         issues.append("Prophet is used but not imported as 'from prophet import Prophet'.")
     if "st." in code and "import streamlit as st" not in code:
         issues.append("Uses Streamlit APIs but missing 'import streamlit as st'.")
+    if "Prophet().plot(" in code:
+        issues.append("Incorrect Prophet plotting; use model.plot(forecast) after fitting the model.")
+    lq = (user_query or "").lower()
+    if "created" in lq and "created_at" not in code and "closed_at" in code:
+        issues.append("User asked for created issues, but code uses closed_at. Use created_at for created issues.")
     return issues
 
 def review_code(code: str, user_query: str):
-    issues = _static_checks(code)
+    issues = _static_checks(code, user_query)
     if issues:
         feedback = "\n".join(issues)
         return False, feedback
@@ -47,6 +52,10 @@ def review_code(code: str, user_query: str):
         "  Do not treat st.pyplot(plt) as an indirect call to plt.show(); it is acceptable.\n"
         "  Do NOT reject simply for using Streamlit display functions.\n"
         "- Forecasting libraries are only required when the user explicitly asks for forecasting. Do not require Prophet or statsmodels otherwise.\n"
+        "- Prophet usage must follow best practices: fit once per repo (model = Prophet(); model.fit(df)), then forecast = model.predict(future), then fig = model.plot(forecast). Do not use Prophet().plot(forecast).\n"
+        "- When the user asks for created issues, the code must use created_at (not closed_at).\n"
+        "- Per-repo plotting should occur inside the per-repo loop to avoid referencing out-of-scope variables.\n"
+        "- Displaying per-repo DataFrames separately is acceptable; do not require concatenation across repos unless requested.\n"
         "- Prefer correctness and executability. Lack of an explicit connection close or context manager is not grounds for rejection.\n\n"
         f"User question:\n{user_query}\n\n"
         f"Code to review:\n{code}\n\n"
