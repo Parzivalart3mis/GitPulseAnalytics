@@ -47,14 +47,14 @@ A powerful analytics platform that leverages multiple AI agents to analyze GitHu
    ```
    GITHUB_TOKEN=your_github_token
    OPENAI_API_KEY=your_openai_api_key
-   DATABASE_URL=postgresql://username:password@localhost:5432/github_analytics
+   DATABASE_URL=postgresql://username:password@localhost:5432/spm_db
    ```
 
 ## Database Setup
 
 1. Create a new PostgreSQL database:
    ```sql
-   CREATE DATABASE github_analytics;
+   CREATE DATABASE spm_db;
    ```
 
 2. The required tables will be created automatically when you run the data collection notebook.
