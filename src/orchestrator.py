@@ -16,15 +16,12 @@ def _extract_code(text: str) -> str:
 
 
 def run_multi_agent_pipeline(user_query: str) -> Dict[str, Any]:
-    # Get code from writer agent
     llm_message = get_code_from_prompt(user_query)
     code = getattr(llm_message, "content", llm_message)
     code = _extract_code(code)
 
-    # Get review score and status
     review_score, review_status = review_code(code, user_query)
     
-    # Execute the code regardless of review status
     exec_result = None
     exec_error = None
     try:

@@ -4,11 +4,11 @@ from orchestrator import run_multi_agent_pipeline
 
 def get_review_color(score: int) -> str:
     if score >= 80:
-        return "#4CAF50"  # Green
+        return "#4CAF50"
     elif score >= 60:
-        return "#FFC107"  # Yellow
+        return "#FFC107"
     else:
-        return "#F44336"  # Red
+        return "#F44336" 
 
 st.title("GitHub Analytics")
 
@@ -17,7 +17,6 @@ if st.button("Run") and user_query.strip():
     with st.spinner('Generating and executing code...'):
         result = run_multi_agent_pipeline(user_query=user_query)
 
-    # Display review status
     col1, col2 = st.columns(2)
     with col1:
         st.metric("Review Status", result["review_status"])
@@ -25,7 +24,6 @@ if st.button("Run") and user_query.strip():
         score = result["review_score"]
         st.metric("Code Quality Score", f"{score}/100")
     
-    # Visual indicator for the score
     st.progress(score / 100, "Code Quality")
     
     st.subheader("Generated Python Code:")
@@ -38,7 +36,6 @@ if st.button("Run") and user_query.strip():
         if result["execution_result"] is not None:
             st.write(result["execution_result"])
         
-        # Display the plot if one was created
         fig = plt.gcf()
         if fig and len(fig.get_axes()) > 0:
             st.pyplot(fig)

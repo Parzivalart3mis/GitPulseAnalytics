@@ -44,17 +44,14 @@ def review_code(code: str, user_query: str):
             - score: A number between 0-100 indicating code quality
             - status: Either "ACCEPTED" or "REJECTED"
     """
-    # Run static checks first
     issues = _static_checks(code, user_query)
     
-    # Initialize LLM for dynamic analysis
     llm = ChatOpenAI(
         model="gpt-4o-mini",
         temperature=0,
         openai_api_key=OPENAI_API_KEY,
     )
     
-    # Simple prompt to get a score and status
     system_prompt = """
     You are a code quality evaluator. Review the code and user query, then provide:
     1. A score from 0-100 based on code quality, correctness, and alignment with requirements
@@ -65,33 +62,28 @@ def review_code(code: str, user_query: str):
     STATUS: [ACCEPTED/REJECTED]
     """
     
-    # Get LLM assessment
     response = llm.invoke(f"{system_prompt}\n\nUser Query: {user_query}\n\nCode:\n{code}")
     response_text = getattr(response, "content", str(response)).strip()
     
-    # Parse response
-    score = 50  # Default score if parsing fails
-    status = "ACCEPTED"  # Default to accepted
+    score = 50 
+    status = "ACCEPTED" 
     
-    # Try to extract score and status from response
     lines = [line.strip() for line in response_text.split('\n') if line.strip()]
     for line in lines:
         if line.upper().startswith("SCORE:"):
             try:
                 score = int(line.split(":")[1].strip())
-                score = max(0, min(100, score))  # Clamp to 0-100
+                score = max(0, min(100, score))
             except (ValueError, IndexError):
                 pass
         elif line.upper().startswith("STATUS:"):
             status = line.split(":")[1].strip().upper()
             if status not in ["ACCEPTED", "REJECTED"]:
-                status = "ACCEPTED"  # Default to accepted if invalid status
+                status = "ACCEPTED" 
     
-    # If there were static issues, cap the score at 70
     if issues and score > 70:
         score = 70
     
-    # If score is below 50, mark as REJECTED regardless of LLM's status
     if score < 50:
         status = "REJECTED"
     

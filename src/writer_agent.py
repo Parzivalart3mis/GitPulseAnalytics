@@ -82,6 +82,5 @@ def get_code_from_prompt(user_query):
     )
     prompt = PromptTemplate.from_template(system_prompt)
     final_prompt = prompt.format(user_query=user_query)
-    # LLM generate code string
     code = llm.invoke(final_prompt)
     return code
