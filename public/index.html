@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>GitPulseAnalytics — Multi-Agent Repository Analytics</title>
-<meta name="description" content="Ask a question about GitHub repository activity in plain English. A multi-agent system writes the SQL and Python, reviews it for quality, executes it, and returns tables, charts, and 30-day forecasts." />
+<meta name="description" content="Ask a question about GitHub repository activity in plain English. A multi-agent system writes the analysis code, reviews it for quality, executes it, and returns tables, charts, and 30-day forecasts." />
 <meta name="author" content="Yash Sharma" />
-<meta name="theme-color" content="#0A1113" />
+<meta name="theme-color" content="#F2F1EC" />
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content="GitPulseAnalytics — Multi-Agent Repository Analytics" />
@@ -18,41 +18,26 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23C3F53C'/><path d='M14 56h16l10-24 12 42 11-30 8 12h15' fill='none' stroke='%230A1113' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23F2F1EC'/><path d='M10 55h15l10-26 12 44 11-32 7 14h15' fill='none' stroke='%23A32E38' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
 </head>
 <body>
 
-<!-- ============ NAV ============ -->
+<!-- ============ MASTHEAD ============ -->
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="#top">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 12h4l2.5-6 3.5 12 3-8 2 2h5" />
-        </svg>
-      </span>
-      GitPulse<em>Analytics</em>
-    </a>
+    <a class="brand" href="#top">GitPulse<span>.</span>Analytics</a>
 
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <path d="M3 6h18M3 12h18M3 18h18" />
-      </svg>
-    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">Menu</button>
 
     <nav class="nav-links" id="navLinks">
-      <a href="#overview">Overview</a>
-      <a href="#features">Features</a>
-      <a href="#workflow">Workflow</a>
-      <a href="#stack">Tech Stack</a>
-      <a class="nav-cta" href="https://github.com/Parzivalart3mis/GitPulseAnalytics" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.5 4.6 18.5 5 18.5 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z" />
-        </svg>
-        GitHub
-      </a>
+      <a href="#overview"><i>01</i>Overview</a>
+      <a href="#features"><i>02</i>Features</a>
+      <a href="#workflow"><i>03</i>Workflow</a>
+      <a href="#data"><i>04</i>Data</a>
+      <a href="#stack"><i>06</i>Stack</a>
+      <a class="is-cta" href="https://github.com/Parzivalart3mis/GitPulseAnalytics" target="_blank" rel="noopener">GitHub &#8599;</a>
     </nav>
   </div>
 </header>
@@ -62,234 +47,245 @@
   <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="wrap">
-      <span class="eyebrow"><span class="pulse-dot"></span> Multi-agent analytics · LangChain + GPT-4o-mini</span>
-
-      <h1>Ask your repos <span class="grad">anything.</span></h1>
-
-      <p class="hero-sub">
-        GitPulseAnalytics turns a plain-English question about GitHub activity into working
-        analysis code. A writer agent drafts it, a reviewer agent scores it, an executor agent
-        runs it — and you get the table, chart, or forecast back in seconds.
-      </p>
-
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://github.com/Parzivalart3mis/GitPulseAnalytics" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.5 4.6 18.5 5 18.5 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z" />
-          </svg>
-          View on GitHub
-        </a>
-        <a class="btn btn-ghost" href="#workflow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="9" /><path d="M12 8v8M8 12h8" />
-          </svg>
-          How it works
-        </a>
+      <div class="dateline">
+        <span>Multi-agent system</span>
+        <span>Python 3.11</span>
+        <span>LangChain &middot; GPT-4o-mini</span>
+        <span>PostgreSQL</span>
+        <span><b>Open source</b></span>
       </div>
 
-      <!-- App mock -->
-      <div class="mock reveal">
-        <div class="mock-bar">
-          <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
-          <span class="mock-title">streamlit run main.py — localhost:8501</span>
-        </div>
-        <div class="mock-body">
-          <div class="mock-prompt">
-            <span>&gt;</span>
-            <code>Plot the trend of closed issues over time and forecast the next 30 days<span class="caret"></span></code>
-          </div>
+      <div class="hero-grid">
+        <h1>Ask your repositories <em>anything</em>.</h1>
 
-          <div class="mock-agents">
-            <div class="mock-agent">
-              <div class="k">Writer</div>
-              <div class="v v-lime">Code generated</div>
-            </div>
-            <div class="mock-agent">
-              <div class="k">Reviewer</div>
-              <div class="v v-teal">ACCEPTED</div>
-            </div>
-            <div class="mock-agent">
-              <div class="k">Executor</div>
-              <div class="v v-clay">Chart rendered</div>
-            </div>
-          </div>
+        <div class="hero-right">
+          <p class="standfirst">
+            GitPulseAnalytics turns a plain-English question about GitHub activity into
+            working analysis code. A <strong>writer</strong> agent drafts it, a
+            <strong>reviewer</strong> agent scores it, an <strong>executor</strong> agent runs
+            it — and the table, chart, or forecast comes back in seconds.
+          </p>
 
-          <div class="mock-meter"><i></i></div>
-          <div class="mock-meta">
-            <span>Code quality score</span>
-            <span>88 / 100</span>
+          <div class="actions">
+            <a class="btn btn-solid" href="https://github.com/Parzivalart3mis/GitPulseAnalytics" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.5 4.6 18.5 5 18.5 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z" /></svg>
+              View source
+            </a>
+            <a class="btn btn-line" href="#workflow">Read the method</a>
           </div>
         </div>
       </div>
+
+      <div class="strip">
+        <div><b>3</b><span>Specialised agents</span></div>
+        <div><b>4</b><span>Postgres tables</span></div>
+        <div><b>0&ndash;100</b><span>Code quality score</span></div>
+        <div><b>30d</b><span>Forecast horizon</span></div>
+      </div>
+
+      <!-- Figure -->
+      <figure class="figure reveal">
+        <div class="figure-frame">
+          <div class="figure-head">
+            <span>Streamlit &middot; localhost:8501</span>
+            <span>main.py</span>
+          </div>
+
+          <div class="figure-body">
+            <div class="query-line">
+              <b>&gt;</b>
+              <code>Plot the trend of closed issues over time and forecast the next 30 days<span class="caret"></span></code>
+            </div>
+
+            <div class="pipeline">
+              <div><div class="k">Writer</div><div class="v">Code generated</div></div>
+              <div><div class="k">Reviewer</div><div class="v">Accepted</div></div>
+              <div><div class="k">Executor</div><div class="v">Chart rendered</div></div>
+            </div>
+
+            <div class="score-row">
+              <span>Code quality</span>
+              <span class="score-bar"><i></i></span>
+              <b>88 / 100</b>
+            </div>
+          </div>
+        </div>
+
+        <figcaption>
+          <b>Fig. 1</b> — A single query passing through the pipeline. The generated code, the
+          reviewer's score, and the execution result are all surfaced in the interface.
+        </figcaption>
+      </figure>
     </div>
   </section>
 
-  <div class="wrap"><div class="divider"></div></div>
-
-  <!-- ============ OVERVIEW ============ -->
+  <!-- ============ 01 OVERVIEW ============ -->
   <section id="overview">
-    <div class="wrap split">
-      <div class="prose reveal">
-        <span class="tag">What it does</span>
-        <h2 style="font-size: clamp(1.75rem, 3.6vw, 2.4rem); margin-bottom: 18px;">
-          Repository data is rich. Querying it shouldn't require writing SQL.
-        </h2>
-        <p>
-          GitPulseAnalytics collects issues, pull requests, commits, and repository metadata
-          from the GitHub API into PostgreSQL — then puts a natural-language layer on top of it.
-        </p>
-        <p>
-          Instead of hand-writing a join across four tables and a plotting script every time a
-          question comes up, you type the question. The system generates <strong>schema-aware
-          Python</strong> that connects to the database, loads the relevant tables into pandas,
-          and renders the answer as text, a table, or a chart in a Streamlit app.
-        </p>
-        <p>
-          It also handles forecasting: <strong>Prophet</strong> for issue volume,
-          <strong>ARIMA/SARIMA</strong> for commits and pull requests, projected 30 days out.
-        </p>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">01 / Overview</span>
+        <h2>Repository data is rich. Querying it shouldn't need SQL.</h2>
       </div>
 
-      <div class="stat-grid reveal">
-        <div class="stat"><b>3</b><span>Specialised agents in the pipeline</span></div>
-        <div class="stat"><b>4</b><span>Normalised Postgres tables</span></div>
-        <div class="stat"><b>0–100</b><span>Automated code quality score</span></div>
-        <div class="stat"><b>30d</b><span>Forecast horizon</span></div>
+      <div class="two-col">
+        <div class="spacer"></div>
+
+        <div class="prose reveal">
+          <p>
+            GitPulseAnalytics collects issues, pull requests, commits, and repository metadata
+            from the GitHub API into PostgreSQL, then puts a natural-language layer on top of it.
+          </p>
+          <p>
+            Instead of hand-writing a join across four tables and a plotting script every time a
+            question comes up, you type the question. The system generates
+            <strong>schema-aware Python</strong> that connects to the database, loads the relevant
+            tables into pandas, and renders the answer as text, a table, or a chart.
+          </p>
+          <p>
+            Forecasting is built in: <strong>Prophet</strong> for issue volume,
+            <strong>ARIMA/SARIMA</strong> for commits and pull requests, projected thirty days out.
+          </p>
+        </div>
+
+        <div class="reveal">
+          <blockquote class="pullquote">
+            Every query is generated, statically checked, scored, and executed — and you can read
+            exactly what ran.
+            <span>Design principle</span>
+          </blockquote>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ FEATURES ============ -->
+  <!-- ============ 02 FEATURES ============ -->
   <section id="features">
     <div class="wrap">
-      <div class="section-head center reveal">
-        <span class="tag">Key features</span>
+      <div class="sec-head">
+        <span class="sec-num">02 / Features</span>
         <h2>Built like a pipeline, not a prompt box</h2>
-        <p>Every query runs through generation, static analysis, LLM review, and sandboxed execution before you see a result.</p>
+        <p>Each query passes through generation, static analysis, LLM review, and sandboxed execution before a result is shown.</p>
       </div>
 
-      <div class="cards">
-        <article class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1" /></svg>
-          </div>
+      <div class="grid-ruled">
+        <article class="cell reveal">
+          <div class="cell-num">i</div>
           <h3>Natural-language queries</h3>
-          <p>Ask in English. The writer agent is primed with the full database schema, so it produces valid joins and column references instead of hallucinated ones.</p>
+          <p>Ask in English. The writer agent is primed with the full database schema, so it produces valid joins and column references rather than hallucinated ones.</p>
         </article>
 
-        <article class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4" /><path d="M21 12c0 5-3.8 7.4-8.2 9-.5.2-1.1.2-1.6 0C6.8 19.4 3 17 3 12V6a1 1 0 0 1 .7-1l8-2.6a1 1 0 0 1 .6 0l8 2.6A1 1 0 0 1 21 6z" /></svg>
-          </div>
+        <article class="cell reveal">
+          <div class="cell-num">ii</div>
           <h3>Two-layer code review</h3>
-          <p>Deterministic static checks (AST compile, banned file I/O, import correctness) run alongside an LLM reviewer that returns a 0–100 quality score and an accept/reject verdict.</p>
+          <p>Deterministic static checks — AST compile, banned file I/O, import correctness — run alongside an LLM reviewer returning a 0–100 score and an accept/reject verdict.</p>
         </article>
 
-        <article class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18" /><path d="M7 15l4-5 3 3 5-7" /></svg>
-          </div>
+        <article class="cell reveal">
+          <div class="cell-num">iii</div>
           <h3>Charts and tables on demand</h3>
-          <p>matplotlib, seaborn, and plotly outputs render straight into the Streamlit surface. Charts are generated only when the question actually asks for one.</p>
+          <p>matplotlib, seaborn, and plotly output renders directly into the Streamlit surface. Charts are produced only when the question actually calls for one.</p>
         </article>
 
-        <article class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" /></svg>
-          </div>
+        <article class="cell reveal">
+          <div class="cell-num">iv</div>
           <h3>Time-series forecasting</h3>
-          <p>Prophet models issue trends; statsmodels ARIMA/SARIMA handles commit and PR velocity. Per-repository fits are aligned on a shared time index for clean comparison.</p>
+          <p>Prophet models issue trends; statsmodels ARIMA/SARIMA handles commit and PR velocity. Per-repository fits are aligned on a shared index for clean comparison.</p>
         </article>
 
-        <article class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5" /><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3" /></svg>
-          </div>
+        <article class="cell reveal">
+          <div class="cell-num">v</div>
           <h3>Normalised Postgres store</h3>
-          <p>A collection notebook pulls repos, issues, pulls, and commits via PyGithub into four typed tables — so analysis runs against a real relational store, not raw API responses.</p>
+          <p>A collection notebook pulls repos, issues, pulls, and commits through PyGithub into four typed tables, so analysis runs against a relational store rather than raw API responses.</p>
         </article>
 
-        <article class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2l-5-4.9 6.9-1z" /></svg>
-          </div>
+        <article class="cell reveal">
+          <div class="cell-num">vi</div>
           <h3>Transparent by default</h3>
-          <p>The generated code, the review score, and the execution result are all shown in the UI. Nothing runs behind a curtain — you can read exactly what was executed.</p>
+          <p>The generated code, the review score, and the execution result all appear in the interface. Nothing runs behind a curtain — you can read exactly what was executed.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- ============ WORKFLOW ============ -->
+  <!-- ============ 03 WORKFLOW ============ -->
   <section id="workflow">
     <div class="wrap">
-      <div class="section-head center reveal">
-        <span class="tag">The multi-agent workflow</span>
+      <div class="sec-head">
+        <span class="sec-num">03 / Method</span>
         <h2>One question, four stages</h2>
         <p>The orchestrator coordinates three specialised agents, each with a single responsibility.</p>
       </div>
 
-      <div class="flow">
-        <div class="step reveal">
-          <div class="step-num">01</div>
+      <div class="steps">
+        <article class="step reveal">
+          <div class="step-n">01</div>
           <div>
-            <h3>Query intake <span class="chip">main.py · Streamlit</span></h3>
-            <p>You type an analytics question into the Streamlit interface. The orchestrator takes it from there — there are no dropdowns, filters, or pre-built dashboards to configure.</p>
+            <h3>Query intake</h3>
+            <div class="step-file">main.py</div>
           </div>
-        </div>
-
-        <div class="flow-arrow" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
-        </div>
-
-        <div class="step reveal">
-          <div class="step-num">02</div>
           <div>
-            <h3>Writer agent <span class="chip">writer_agent.py</span></h3>
+            <p>An analytics question is typed into the Streamlit interface and handed to the orchestrator. There are no dropdowns, filters, or pre-built dashboards to configure first.</p>
+          </div>
+        </article>
+
+        <article class="step reveal">
+          <div class="step-n">02</div>
+          <div>
+            <h3>Writer agent</h3>
+            <div class="step-file">writer_agent.py</div>
+          </div>
+          <div>
             <p>A GPT-4o-mini call through LangChain receives the question plus the full schema of all four tables. It returns executable Python — Postgres connection, pandas loading, analysis, and Streamlit rendering — with markdown fences stripped by the orchestrator.</p>
-            <div class="step-note">Temperature is held at 0.1 to keep generated code deterministic across repeat runs.</div>
+            <div class="step-note">
+              <b>Note</b>
+              Temperature is held at 0.1 to keep generated code stable across repeat runs of the same question.
+            </div>
           </div>
-        </div>
+        </article>
 
-        <div class="flow-arrow" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
-        </div>
-
-        <div class="step reveal">
-          <div class="step-num">03</div>
+        <article class="step reveal">
+          <div class="step-n">03</div>
           <div>
-            <h3>Reviewer agent <span class="chip">reviewer_agent.py</span></h3>
-            <p>Two checks run in sequence. Static analysis compiles the code and flags concrete violations — <code class="mono">plt.show()</code> calls, file I/O, <code class="mono">input()</code>, missing imports, wrong Prophet usage, or a timestamp column that contradicts the question. Then an LLM reviewer scores quality 0–100 and returns ACCEPTED or REJECTED.</p>
-            <div class="step-note">Static findings cap the score at 70, and anything below 50 is forced to REJECTED — so the deterministic checks always outrank the model's opinion.</div>
+            <h3>Reviewer agent</h3>
+            <div class="step-file">reviewer_agent.py</div>
           </div>
-        </div>
-
-        <div class="flow-arrow" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
-        </div>
-
-        <div class="step reveal">
-          <div class="step-num">04</div>
           <div>
-            <h3>Executor agent <span class="chip">executor_agent.py</span></h3>
-            <p>The approved code runs in a LangChain <code class="mono">PythonREPL</code>, with execution errors caught and surfaced rather than crashing the app. The generated code, quality score, and result — text, dataframe, or figure — are returned together to the UI.</p>
-            <div class="step-note">The review runs before execution and is reported alongside the output; the current build surfaces the score rather than using it as a hard gate.</div>
+            <p>Two checks run in sequence. Static analysis compiles the code and flags concrete violations — <code class="mono">plt.show()</code> calls, file I/O, <code class="mono">input()</code>, missing imports, incorrect Prophet usage, or a timestamp column that contradicts the question. An LLM reviewer then scores quality from 0 to 100 and returns ACCEPTED or REJECTED.</p>
+            <div class="step-note">
+              <b>Precedence</b>
+              Static findings cap the score at 70, and anything below 50 is forced to REJECTED — so deterministic checks always outrank the model's opinion.
+            </div>
           </div>
-        </div>
+        </article>
+
+        <article class="step reveal">
+          <div class="step-n">04</div>
+          <div>
+            <h3>Executor agent</h3>
+            <div class="step-file">executor_agent.py</div>
+          </div>
+          <div>
+            <p>The code runs inside a LangChain <code class="mono">PythonREPL</code>, with execution errors caught and surfaced rather than crashing the app. The generated code, quality score, and result — text, dataframe, or figure — return together to the interface.</p>
+            <div class="step-note">
+              <b>Current behaviour</b>
+              Review runs before execution and is reported alongside the output; this build surfaces the score rather than using it as a hard gate.
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- ============ DATA MODEL ============ -->
+  <!-- ============ 04 DATA MODEL ============ -->
   <section id="data">
     <div class="wrap">
-      <div class="section-head reveal">
-        <span class="tag">Data model</span>
+      <div class="sec-head">
+        <span class="sec-num">04 / Data model</span>
         <h2>Four tables, one schema contract</h2>
         <p>The same schema is embedded in the writer agent's prompt and enforced by the reviewer's static checks.</p>
       </div>
 
-      <div class="schema-scroll reveal">
+      <div class="table-scroll reveal">
         <table>
           <thead>
             <tr><th>Table</th><th>Contents</th><th>Key columns</th></tr>
@@ -298,22 +294,22 @@
             <tr>
               <td>github_repos</td>
               <td>Repository-level popularity metrics</td>
-              <td class="mono">repo · stars · forks</td>
+              <td>repo · stars · forks</td>
             </tr>
             <tr>
               <td>github_issues</td>
               <td>Issue lifecycle and labelling</td>
-              <td class="mono">state · created_at · closed_at · labels</td>
+              <td>state · created_at · closed_at · labels</td>
             </tr>
             <tr>
               <td>github_pulls</td>
               <td>Pull request flow and authorship</td>
-              <td class="mono">state · merged_at · user_login</td>
+              <td>state · merged_at · user_login</td>
             </tr>
             <tr>
               <td>github_commits</td>
               <td>Commit history per contributor</td>
-              <td class="mono">sha · author_login · committed_at</td>
+              <td>sha · author_login · committed_at</td>
             </tr>
           </tbody>
         </table>
@@ -321,100 +317,84 @@
     </div>
   </section>
 
-  <!-- ============ EXAMPLES ============ -->
+  <!-- ============ 05 EXAMPLES ============ -->
   <section id="examples">
     <div class="wrap">
-      <div class="section-head reveal">
-        <span class="tag">Example questions</span>
+      <div class="sec-head">
+        <span class="sec-num">05 / In practice</span>
         <h2>Things you can ask it</h2>
       </div>
 
-      <div class="queries">
-        <div class="query reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M4 6h16M4 18h10" /></svg> Show the most active repositories by number of commits</div>
-        <div class="query reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18" /><path d="M7 14l4-4 3 3 5-6" /></svg> Plot the trend of issues over time</div>
-        <div class="query reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12M6 21v-2M18 3v2M18 9v12" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="6" r="3" /></svg> Compare pull request statistics between repositories</div>
-        <div class="query reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg> Predict the number of issues for the next month</div>
-        <div class="query reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2l-5-4.9 6.9-1z" /></svg> Visualize the relationship between stars and forks</div>
-        <div class="query reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.9" /></svg> Which contributors closed the most issues last quarter?</div>
+      <div class="q-list">
+        <div class="q-item reveal"><span class="n">Q.01</span><span class="t">Show the most active repositories by number of commits</span></div>
+        <div class="q-item reveal"><span class="n">Q.02</span><span class="t">Plot the trend of issues over time</span></div>
+        <div class="q-item reveal"><span class="n">Q.03</span><span class="t">Compare pull request statistics between repositories</span></div>
+        <div class="q-item reveal"><span class="n">Q.04</span><span class="t">Predict the number of issues for the next month</span></div>
+        <div class="q-item reveal"><span class="n">Q.05</span><span class="t">Visualise the relationship between stars and forks</span></div>
+        <div class="q-item reveal"><span class="n">Q.06</span><span class="t">Which contributors closed the most issues last quarter?</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ TECH STACK ============ -->
+  <!-- ============ 06 STACK ============ -->
   <section id="stack">
     <div class="wrap">
-      <div class="section-head center reveal">
-        <span class="tag">Tech stack</span>
+      <div class="sec-head">
+        <span class="sec-num">06 / Tech stack</span>
         <h2>What it's built with</h2>
         <p>Python 3.11 throughout, with a deliberately small and well-supported dependency surface.</p>
       </div>
 
-      <div class="stack-groups">
-        <div class="stack-group reveal">
-          <h3>AI &amp; Orchestration</h3>
-          <div class="pills">
-            <span class="pill">LangChain</span>
-            <span class="pill">LangGraph</span>
-            <span class="pill">OpenAI GPT-4o-mini</span>
-            <span class="pill">langchain-experimental</span>
-            <span class="pill">PythonREPL</span>
-          </div>
+      <div class="reveal">
+        <div class="stack-row">
+          <h3>AI &amp; orchestration</h3>
+          <ul>
+            <li>LangChain</li><li>LangGraph</li><li>OpenAI GPT-4o-mini</li>
+            <li>langchain-experimental</li><li>PythonREPL</li>
+          </ul>
         </div>
 
-        <div class="stack-group reveal">
-          <h3>Data &amp; Storage</h3>
-          <div class="pills">
-            <span class="pill">PostgreSQL</span>
-            <span class="pill">psycopg2</span>
-            <span class="pill">pandas</span>
-            <span class="pill">NumPy</span>
-            <span class="pill">PyGithub</span>
-          </div>
+        <div class="stack-row">
+          <h3>Data &amp; storage</h3>
+          <ul>
+            <li>PostgreSQL</li><li>psycopg2</li><li>pandas</li><li>NumPy</li><li>PyGithub</li>
+          </ul>
         </div>
 
-        <div class="stack-group reveal">
-          <h3>Analysis &amp; Forecasting</h3>
-          <div class="pills">
-            <span class="pill">Prophet</span>
-            <span class="pill">statsmodels</span>
-            <span class="pill">ARIMA / SARIMA</span>
-            <span class="pill">Jupyter</span>
-          </div>
+        <div class="stack-row">
+          <h3>Analysis &amp; forecasting</h3>
+          <ul>
+            <li>Prophet</li><li>statsmodels</li><li>ARIMA / SARIMA</li><li>Jupyter</li>
+          </ul>
         </div>
 
-        <div class="stack-group reveal">
-          <h3>Interface &amp; Visualisation</h3>
-          <div class="pills">
-            <span class="pill">Streamlit</span>
-            <span class="pill">matplotlib</span>
-            <span class="pill">seaborn</span>
-            <span class="pill">plotly</span>
-          </div>
+        <div class="stack-row">
+          <h3>Interface &amp; visualisation</h3>
+          <ul>
+            <li>Streamlit</li><li>matplotlib</li><li>seaborn</li><li>plotly</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ CTA ============ -->
-  <section id="cta" style="padding-top: 20px;">
+  <section id="cta" style="padding-top: 10px;">
     <div class="wrap">
       <div class="cta reveal">
-        <h2>Read the source</h2>
-        <p>
-          The full multi-agent pipeline, the data collection notebook, and setup instructions
-          are on GitHub. Clone it, point it at your own repositories, and start asking questions.
-        </p>
-        <div class="hero-actions" style="margin-top: 0;">
-          <a class="btn btn-primary" href="https://github.com/Parzivalart3mis/GitPulseAnalytics" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.5 4.6 18.5 5 18.5 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z" />
-            </svg>
-            Parzivalart3mis/GitPulseAnalytics
+        <div>
+          <h2>Read the source</h2>
+          <p>
+            The full multi-agent pipeline, the data collection notebook, and setup instructions
+            are on GitHub. Clone it, point it at your own repositories, and start asking questions.
+          </p>
+        </div>
+        <div class="actions" style="margin-top: 0;">
+          <a class="btn btn-solid" href="https://github.com/Parzivalart3mis/GitPulseAnalytics" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.5 4.6 18.5 5 18.5 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z" /></svg>
+            Repository
           </a>
-          <a class="btn btn-ghost" href="https://github.com/Parzivalart3mis/GitPulseAnalytics#readme" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>
-            Setup guide
-          </a>
+          <a class="btn btn-line" href="https://github.com/Parzivalart3mis/GitPulseAnalytics#readme" target="_blank" rel="noopener">Setup guide</a>
         </div>
       </div>
     </div>
@@ -427,14 +407,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-about">
-        <a class="brand" href="#top">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 12h4l2.5-6 3.5 12 3-8 2 2h5" />
-            </svg>
-          </span>
-          GitPulse<em>Analytics</em>
-        </a>
+        <a class="brand" href="#top">GitPulse<span>.</span>Analytics</a>
         <p>
           A multi-agent repository analytics platform built by Yash Sharma —
           natural-language questions in, reviewed and executed analysis out.
@@ -446,7 +419,7 @@
         <ul>
           <li><a href="#overview">Overview</a></li>
           <li><a href="#features">Features</a></li>
-          <li><a href="#workflow">Workflow</a></li>
+          <li><a href="#workflow">Method</a></li>
           <li><a href="#stack">Tech stack</a></li>
         </ul>
       </div>
@@ -454,43 +427,22 @@
       <div class="foot-col">
         <h4>Connect</h4>
         <ul>
-          <li>
-            <a href="https://github.com/Parzivalart3mis" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.5 4.6 18.5 5 18.5 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z" /></svg>
-              GitHub
-            </a>
-          </li>
-          <li>
-            <a href="https://www.linkedin.com/in/YOUR-LINKEDIN" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.75-1.95C20.6 8.75 22 11 22 14.4V21h-4v-5.9c0-1.4-.03-3.2-2-3.2s-2.3 1.5-2.3 3.1V21H9z" /></svg>
-              LinkedIn
-            </a>
-          </li>
-          <li>
-            <a href="https://YOUR-PORTFOLIO-URL" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" /></svg>
-              Portfolio
-            </a>
-          </li>
-          <li>
-            <a href="mailto:ysharma6@hawk.illinoistech.edu">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" /></svg>
-              Email
-            </a>
-          </li>
+          <li><a href="https://github.com/Parzivalart3mis" target="_blank" rel="noopener">GitHub &#8599;</a></li>
+          <li><a href="https://www.linkedin.com/in/YOUR-LINKEDIN" target="_blank" rel="noopener">LinkedIn &#8599;</a></li>
+          <li><a href="https://YOUR-PORTFOLIO-URL" target="_blank" rel="noopener">Portfolio &#8599;</a></li>
+          <li><a href="mailto:ysharma6@hawk.illinoistech.edu">Email</a></li>
         </ul>
       </div>
     </div>
 
     <div class="foot-bottom">
-      <span>&copy; <span id="year">2026</span> Yash Sharma. All rights reserved.</span>
-      <span>Built with Python, LangChain &amp; Streamlit · Deployed on Vercel</span>
+      <span>&copy; <span id="year">2026</span> Yash Sharma</span>
+      <span>Python · LangChain · Streamlit — deployed on Vercel</span>
     </div>
   </div>
 </footer>
 
 <script>
-  // Mobile nav
   var toggle = document.getElementById('navToggle');
   var links = document.getElementById('navLinks');
 
@@ -500,13 +452,12 @@
   });
 
   links.addEventListener('click', function (e) {
-    if (e.target.tagName === 'A') {
+    if (e.target.closest('a')) {
       links.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
     }
   });
 
-  // Scroll reveal
   var reveals = document.querySelectorAll('.reveal');
 
   if ('IntersectionObserver' in window) {
@@ -517,17 +468,16 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     reveals.forEach(function (el, i) {
-      el.style.transitionDelay = (i % 3) * 70 + 'ms';
+      el.style.transitionDelay = (i % 3) * 60 + 'ms';
       io.observe(el);
     });
   } else {
     reveals.forEach(function (el) { el.classList.add('in'); });
   }
 
-  // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
