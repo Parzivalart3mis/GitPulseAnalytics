@@ -1,1 +1,5 @@
 bonus_assignment/
+.vercel
+.env
+__pycache__/
+*.pyc
